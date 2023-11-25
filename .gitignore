@@ -1,0 +1,14 @@
+# ignore node modules
+node_modules
+
+# ignore log.txt
+log.txt
+
+# ignore .env
+.env
+
+# ignore .env.example
+.env.example
+
+
+
