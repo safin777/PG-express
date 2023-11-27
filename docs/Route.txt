@@ -1,0 +1,13 @@
+REST-API JSON 
+
+1. GET/api/users -- get all users
+2. GET/api/users/{id} -- get user by id
+3. POST/users -- create user
+4. PUT/users/{id} -- update user by id
+
+
+5. DELETE/users/:id -- delete user by id
+[-- Here :id = Variable ||Dynamic data --]
+
+
+
