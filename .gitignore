@@ -9,6 +9,7 @@ log.txt
 
 # ignore .env.example
 .env.example
-
+.dbConnect.js
+```
 
 
