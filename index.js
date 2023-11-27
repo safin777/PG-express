@@ -1,32 +1,30 @@
-const fs = require('fs')
+
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT;
+const dbConnect = require('./dbConnect')
+const { __createRequsetResponseLogger } = require('./middlewares/index')
+const dbUrl = process.env.MONGO_URI 
+
+
+//connect the database
+console.log(dbUrl)
+dbConnect(dbUrl)
+
+//Write all router here
+const userRouter = require('./routes/user')
+const { db } = require('./models/user')
 
 //logger middleware
+app.use(__createRequsetResponseLogger('log.txt'))
 
-app.use((req, res, next) => {
-  if (res.path == '/favicon.ico') {
-    res.end()
-  } else {
-    fs.appendFile(
-      'log.txt',
-      `${Date.now()} : ${req.method}: ${req.path} \n`,
-      (err, data) => {
-        if (err) {
-          console.log(err)
-        } else {
-          next()
-        }
-      },
-    )
-  }
-})
 
-app.get('/', (req, res) => {
-  res.send('Hello from express')
-})
+app.use(express.json())
+app.use("/user", userRouter)
 
+
+
+//listen the port
 app.listen(PORT, (err) => {
   if (err) {
     console.log('Error starting server')
