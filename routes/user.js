@@ -1,10 +1,9 @@
 const express = require('express')
 const router = express.Router()
+const {getAllUsers} = require('../controllers/user')
 
 
-router.get('/', async (req, res) => {
-    await res.send('Hello from pg_express')
-})
+router.get('/', getAllUsers)
 
 
 module.exports = router

@@ -9,21 +9,25 @@ const dbUrl= process.env.MONGO_URI
 const PORT = process.env.PORT;
 
 
+
 //connect the database
 dbConnect(dbUrl)
 
 //Write all router here
 const userRouter = require('./routes/user')
-const { db } = require('./models/user')
+const urlRouter = require('./routes/url')
+
 
 //logger middleware 
 //TODO:  Middleware will start with __ (double underscore)
+
 app.use(__createRequsetResponseLogger('log.txt'))
 
 
 
 app.use(express.json())
 app.use("/user", userRouter)
+app.use("/url", urlRouter)
 
 
 
