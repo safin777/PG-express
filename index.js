@@ -1,22 +1,25 @@
 
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT;
+const dotenv = require('dotenv')
+dotenv.config({ path: '.env'})
 const dbConnect = require('./dbConnect')
 const { __createRequsetResponseLogger } = require('./middlewares/index')
-const dbUrl = process.env.MONGO_URI 
+const dbUrl= process.env.MONGO_URI
+const PORT = process.env.PORT;
 
 
 //connect the database
-console.log(dbUrl)
 dbConnect(dbUrl)
 
 //Write all router here
 const userRouter = require('./routes/user')
 const { db } = require('./models/user')
 
-//logger middleware
+//logger middleware 
+//TODO:  Middleware will start with __ (double underscore)
 app.use(__createRequsetResponseLogger('log.txt'))
+
 
 
 app.use(express.json())
