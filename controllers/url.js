@@ -1,17 +1,24 @@
 const URL = require('../models/url')
 const shortid = require('shortid') // nanoid generates random strings of characters
 
+//TODO: Implement the getIndexPage function
+
+const getIndexPage = async (req, res) => {
+  const urls = await URL.find({})
+  return res.render('../views/url/index', { urls: urls })
+}
+
 //TODO: Implement the generateNewShortUrl function
 
 const generateNewShortUrl = async (req, res) => {
-  const body = req.body
+  const input_url = req.body.given_url
   //validation of the url
-  if (!body.url) return res.status(400).json({ message: 'url is required' })
+  if (!input_url) return res.status(400).json({ message: 'url is required' })
   const shortId = shortid()
 
   await URL.create({
     shortId: shortId,
-    redirectUrl: body.url,
+    redirectUrl: input_url,
     visitHistory: [],
   })
   return res.json({ id: shortId })
@@ -55,6 +62,7 @@ const getAnalyticsReportofClicks = async (req, res) => {
 }
 
 module.exports = {
+  getIndexPage,
   generateNewShortUrl,
   getToRedirectOriginalUrl,
   getAnalyticsReportofClicks,
