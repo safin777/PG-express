@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PG-Login</title>
+    <link rel="stylesheet"  href="../public/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="body_container bg-black">
+     <div class="container">
+       <form action="/user/login" method="POST">
+        <input type="text" class="user_email" name="email" placeholder="email" >
+        <input type="password" class="user_password" name="passowrd" placeholder="passowrd" >
+        <button type="submit" class="text-green-500 border-2">submit</button>
+       </form>
+     </div>
+</body>
+</html>
