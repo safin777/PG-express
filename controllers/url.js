@@ -5,15 +5,12 @@ const { getUser } = require('../services/auth')
 const { get } = require('mongoose')
 //TODO: Implement the getIndexPage function
 
-
-
 const getIndexPage = async (req, res) => {
   let user = getUser(req.cookies?.sessionUserToken)
   let uid = user[0]._id.toString()
-  const userinfo =  await User.find({ _id: uid});
-  const urls = await URL.find({ createdBy: uid});
-  console.log("urls-----------------",urls)
-  return res.render('../views/url/index', { urls: urls , userinfo:userinfo })
+  const userinfo = await User.findOne({ _id: uid })
+  const urls = await URL.find({ createdBy: uid })
+  return res.render('../views/url/index', { urls: urls, userinfo: userinfo });
 }
 
 //TODO: Implement the generateNewShortUrl function
@@ -25,7 +22,7 @@ const generateNewShortUrl = async (req, res) => {
   //validation of the url
   if (!input_url) return res.status(400).json({ message: 'url is required' })
   const shortId = shortid()
-  
+
   const url = new URL({
     shortId: shortId,
     redirectUrl: input_url,
