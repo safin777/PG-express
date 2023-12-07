@@ -5,10 +5,8 @@ const restrictToLoggedInUserOnly = async (req, res, next) => {
   const userId = req.cookies?.sessionUserToken;
   if (!userId) return res.redirect('/login')
   const user = getUser(userId)
-  //console.log("user-----------------",user)
   if (!user) return res.redirect('/login')
   req.user = user
-  //console.log("req.user-----------------",req.user)
   next()
 }
 

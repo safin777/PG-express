@@ -22,8 +22,6 @@ const validateLoginInfo = async (req, res) => {
         res.cookie('sessionUserToken', loginSessionToken) //set cookie
         //pass the user object to the next redirect url
         return res.redirect('/url')
-
-
       } else {
         return res.status(400).json({ message: 'Password is incorrect' })
       }
