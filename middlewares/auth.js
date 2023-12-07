@@ -14,6 +14,7 @@ const restrictToLoggedInUserOnly = async (req, res, next) => {
 const checkAuth = async (req, res, next) => {
   const userId = req.cookies?.sessionUserToken
   const user = getUser(userId)
+  console.log("checkAuth method",user)
   req.user = user
   next()
 }

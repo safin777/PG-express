@@ -5,7 +5,7 @@ const {redirectToLoginPage,validateLoginInfo,getRegisterPage,validateRegisterInf
 
 router.get('/', (req, res) => {
   let user = req.user
-  console.log("passing from static js file",user)
+  console.log("static.js file",user)
   if (user) {
     return res.redirect('/url')
   }

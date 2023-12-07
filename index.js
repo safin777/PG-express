@@ -8,15 +8,18 @@ const { __createRequsetResponseLogger } = require('./middlewares/index')
 const dbUrl = process.env.MONGO_URI
 const PORT = process.env.PORT
 const cookieParser = require('cookie-parser')
-const { __restrictToLoggedInUserOnly,__checkAuth } = require('./middlewares/auth')
+const {
+  __restrictToLoggedInUserOnly,
+  __checkAuth,
+} = require('./middlewares/auth')
 
 //connect the database
 dbConnect(dbUrl)
 
 //Write all router here
 const staticRouter = require('./routes/static')
-//const userRouter = require('./routes/user')
 const urlRouter = require('./routes/url')
+//const userRouter = require('./routes/user')
 
 //set view engine
 app.set('view engine', 'ejs') //to set the view engine
@@ -32,9 +35,9 @@ app.use(cookieParser()) //to support cookies
 app.use(__createRequsetResponseLogger('log.txt'))
 
 //using the routes
-app.use('/',__checkAuth,staticRouter)
+app.use('/', __checkAuth, staticRouter)
 //app.use('/user', userRouter)
-app.use('/url', __restrictToLoggedInUserOnly,urlRouter)
+app.use('/url', __restrictToLoggedInUserOnly, urlRouter)
 
 //listen the port
 app.listen(PORT, (err) => {

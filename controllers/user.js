@@ -1,6 +1,6 @@
 const User = require('../models/user')
-const { v4: uuidv4 } = require('uuid')
 const { setUser } = require('../services/auth')
+
 
 //TODO: Login part here
 
@@ -17,9 +17,8 @@ const validateLoginInfo = async (req, res) => {
     } else {
       const user = await User.find({ email: email })
       if (user.password == password) {
-        const loginSessionToken = uuidv4() //generate session token
-        setUser(loginSessionToken, user) //set session
-        res.cookie('sessionUserToken', loginSessionToken) //set cookie
+        const token = setUser(user) //set session
+        res.cookie('sessionUserToken', token) //set cookie
         //pass the user object to the next redirect url
         return res.redirect('/url')
       } else {
