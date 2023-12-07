@@ -2,15 +2,16 @@ const URL = require('../models/url')
 const User = require('../models/user')
 const shortid = require('shortid') // nanoid generates random strings of characters
 const { getUser } = require('../services/auth')
-const { get } = require('mongoose')
 //TODO: Implement the getIndexPage function
 
 const getIndexPage = async (req, res) => {
   let user = getUser(req.cookies?.sessionUserToken)
-  let uid = user[0]._id.toString()
+  console.log(user)
+  let uid = user[0]._id;
+  console.log(uid)
   const userinfo = await User.findOne({ _id: uid })
   const urls = await URL.find({ createdBy: uid })
-  return res.render('../views/url/index', { urls: urls, userinfo: userinfo });
+  return res.render('../views/url/index', { urls: urls, userinfo: userinfo })
 }
 
 //TODO: Implement the generateNewShortUrl function
