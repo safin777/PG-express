@@ -15,11 +15,10 @@ const validateLoginInfo = async (req, res) => {
     if (!result) {
       return res.status(400).json({ message: 'User not found' })
     } else {
-      const user = await User.find({ email: email })
+      const user = await User.findOne({ email: email })
       if (user.password == password) {
         const token = setUser(user) //set session
         res.cookie('sessionUserToken', token) //set cookie
-        //pass the user object to the next redirect url
         return res.redirect('/url')
       } else {
         return res.status(400).json({ message: 'Password is incorrect' })

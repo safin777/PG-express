@@ -6,9 +6,7 @@ const { getUser } = require('../services/auth')
 
 const getIndexPage = async (req, res) => {
   let user = getUser(req.cookies?.sessionUserToken)
-  console.log(user)
-  let uid = user[0]._id;
-  console.log(uid)
+  let uid = user._id
   const userinfo = await User.findOne({ _id: uid })
   const urls = await URL.find({ createdBy: uid })
   return res.render('../views/url/index', { urls: urls, userinfo: userinfo })
@@ -23,7 +21,6 @@ const generateNewShortUrl = async (req, res) => {
   //validation of the url
   if (!input_url) return res.status(400).json({ message: 'url is required' })
   const shortId = shortid()
-
   const url = new URL({
     shortId: shortId,
     redirectUrl: input_url,

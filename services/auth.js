@@ -7,7 +7,7 @@ const setUser = (user) => {
  return jwt.sign({
   _id : user._id,
   email: user.email,
- }, SECRET_KEY);
+ },SECRET_KEY);
 }
 
 const getUser = (token) => {
