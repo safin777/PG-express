@@ -18,8 +18,9 @@ const validateLoginInfo = async (req, res) => {
       const user = await User.findOne({ email: email })
       if (user.password == password) {
         const token = setUser(user) //set session
-        res.cookie('sessionUserToken', token) //set cookie
-        return res.redirect('/url')
+        //res.cookie('sessionUserToken', token) //set cookie
+        
+        return res.json({ token })
       } else {
         return res.status(400).json({ message: 'Password is incorrect' })
       }
