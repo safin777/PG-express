@@ -1,11 +1,16 @@
 const express = require('express')
 const router = express.Router()
-const {redirectToLoginPage,validateLoginInfo,getRegisterPage,validateRegisterInfo} = require('../controllers/user')
-
+const {
+  redirectToLoginPage,
+  validateLoginInfo,
+  getRegisterPage,
+  validateRegisterInfo,
+} = require('../controllers/user')
+const { getUser } = require('../services/auth')
 
 router.get('/', (req, res) => {
-  let user = req.user
-  console.log("static.js file",user)
+  let user = getUser(req.cookies?.sessionUserToken)
+  console.log('static.js file', user)
   if (user) {
     return res.redirect('/url')
   }
@@ -14,13 +19,10 @@ router.get('/', (req, res) => {
 
 //TODO: register
 
-router.get('/register',getRegisterPage)
-.post('/register',validateRegisterInfo);
+router.get('/register', getRegisterPage).post('/register', validateRegisterInfo)
 
-//TODO: login 
+//TODO: login
 
-router.get('/login',redirectToLoginPage)
-.post('/login',validateLoginInfo);
+router.get('/login', redirectToLoginPage).post('/login', validateLoginInfo)
 
-module.exports = router;
-
+module.exports = router
