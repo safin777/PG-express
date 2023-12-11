@@ -9,8 +9,8 @@ const dbUrl = process.env.MONGO_URI
 const PORT = process.env.PORT
 const cookieParser = require('cookie-parser')
 const {
-  __restrictToLoggedInUserOnly,
-  __checkAuth,
+  __checkForAuthentication,
+  __restricToRoles,
 } = require('./middlewares/auth')
 
 //connect the database
@@ -29,15 +29,18 @@ app.use(express.static(path.resolve('./public'))) //to serve static files
 app.use(express.urlencoded({ extended: false })) //to support form  data
 app.use(cookieParser()) //to support cookies
 
+app.use(__checkForAuthentication) //authentication middleware
+
 //logger middleware
 //TODO:  Middleware will start with __ (double underscore)
 
 app.use(__createRequsetResponseLogger('log.txt'))
 
 //using the routes
-app.use('/', __checkAuth, staticRouter)
+app.use('/', staticRouter)
+app.use('/url',__restricToRoles(["user"]),urlRouter) //restrict to user only
+
 //app.use('/user', userRouter)
-app.use('/url', __restrictToLoggedInUserOnly, urlRouter)
 
 //listen the port
 app.listen(PORT, (err) => {
