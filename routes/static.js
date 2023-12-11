@@ -10,7 +10,6 @@ const { getUser } = require('../services/auth')
 
 router.get('/', (req, res) => {
   let user = getUser(req.cookies?.sessionUserToken)
-  console.log('static.js file', user)
   if (user) {
     return res.redirect('/url')
   }

@@ -2,11 +2,16 @@ const URL = require('../models/url')
 const User = require('../models/user')
 const shortid = require('shortid') // nanoid generates random strings of characters
 const { getUser } = require('../services/auth')
+
+const uidGenerator = (req,res) => {
+  let user = getUser(req.cookies?.sessionUserToken)
+  let uid = user._id.toString();
+  return uid;
+}
 //TODO: Implement the getIndexPage function
 
 const getIndexPage = async (req, res) => {
-  let user = getUser(req.cookies?.sessionUserToken)
-  let uid = user._id
+  let uid = await uidGenerator(req,res);
   const userinfo = await User.findOne({ _id: uid })
   const urls = await URL.find({ createdBy: uid })
   return res.render('../views/url/index', { urls: urls, userinfo: userinfo })
@@ -15,8 +20,7 @@ const getIndexPage = async (req, res) => {
 //TODO: Implement the generateNewShortUrl function
 
 const generateNewShortUrl = async (req, res) => {
-  let user = getUser(req.cookies?.sessionUserToken)
-  let uid = user[0]._id.toString()
+  let uid = await uidGenerator(req,res);
   const input_url = req.body.given_url
   //validation of the url
   if (!input_url) return res.status(400).json({ message: 'url is required' })
